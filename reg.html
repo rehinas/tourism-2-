@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Signup Form</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+      body {
+        background-image: url(styles/images/reg.jpg);
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+      h1{
+        color: blue;
+      }
+      .container {
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+        padding: 20px;
+        margin-top: 50px;
+      }
+      .form-group {
+        position: relative;
+      }
+      .error {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        font-size: 12px;
+        color: red;
+      }
+      .strength {
+        height: 10px;
+        margin-top: 5px;
+      }
+      .strength .bar {
+        height: 100%;
+        width: 0%;
+        transition: width 0.3s;
+      }
+      .strength .bar-weak {
+        background-color: red;
+      }
+      .strength .bar-medium {
+        background-color: orange;
+      }
+      .strength .bar-strong {
+        background-color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Signup Form</h1>
+      <form action="#" onsubmit="return verification()">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" class="form-control" id="name" placeholder="Enter name">
+          <div class="error" id="name-error"></div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="t" class="form-control" id="email" placeholder="Enter email">
+          <div class="error" id="email-error"></div>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number:</label>
+          <input type="text" class="form-control" id="phone" placeholder="Enter phone number">
+          <div class="error" id="phone-error"></div>
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" class="form-control" id="password" placeholder="Enter password">
+          <div class="strength">
+            <div class="bar bar-weak"></div>
+            <div class="bar bar-medium"></div>
+            <div class="bar bar-strong"></div>
+          </div>
+          <div class="error" id="password-error"></div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <label>alreade have an accout?</label>
+        <a href="login.html">Sign in</a>
+      </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        function verification() {
+  
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const phone = document.getElementById('phone').value;
+  const password = document.getElementById('password').value;
+
+  
+  if (!name) {
+    document.getElementById('name-error').innerHTML = 'Please enter your name';
+    return false;
+  }
+
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    document.getElementById('email-error').innerHTML = 'Please enter a valid email address';
+    return false;
+  }
+
+
+  const phoneRegex = /^(?:\d{10}|\d{3}[-.\s]\d{3}[-.\s]\d{4})$/;
+  if (!phoneRegex.test(phone)) {
+    document.getElementById('phone-error').innerHTML = 'Please enter a valid phone number';
+    return false;
+  }
+
+
+  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+  if (!passwordRegex.test(password)) {
+    document.getElementById('password-error').innerHTML = 'Password must contain at least 8 characters, one uppercase letter, one lowercase letter, and one digit';
+    return false;
+  }
+
+  const passwordStrength = calculatePasswordStrength(password);
+  const passwordStrengthBars = document.querySelectorAll('.bar');
+  for (let i = 0; i < passwordStrengthBars.length; i++) {
+    passwordStrengthBars[i].classList.remove('bg-danger', 'bg-warning', 'bg-success');
+    if (passwordStrength === 1) {
+      passwordStrengthBars[i].classList.add('bg-danger');
+    } else if (passwordStrength === 2) {
+      passwordStrengthBars[i].classList.add('bg-warning');
+    } else {
+      passwordStrengthBars[i].classList.add('bg-success');
+    }
+  }
+
+  return true;
+}
+
+function calculatePasswordStrength(password) {
+  let strength = 0;
+  if (password.length >= 8) {
+    strength++;
+  }
+  if (password.match(/[a-z]/)) {
+    strength++;
+  }
+  if (password.match(/[A-Z]/)) {
+    strength++;
+  }
+  if (password.match(/\d/)) {
+    strength++;
+  }
+  return strength;
+}
+
+</script>
+    </body>
+</html>
+             
+  
+   
